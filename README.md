@@ -1,4 +1,4 @@
-**insert logo**
+![SignaGen-ai logo](https://i.imgur.com/jUWoPBS.png)
 
 # SignaGen-ai
 
@@ -8,7 +8,7 @@ SignaGen-ai is a web application that allows users to generate signatures using 
 
 **insert video demo**
 
-Try out an example here: https://sig-gen.vercel.app/
+Try out an example here: **insert example site link**
 
 ```Note: The example site is just displaying the same pre-generated signatures as an example, and not actually generating signatures. If you want to generate signatures, you can setup the app locally with the instructions below.```
 
