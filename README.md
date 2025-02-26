@@ -1,29 +1,68 @@
-# Create T3 App
+**insert logo**
 
-This is a [T3 Stack](https://create.t3.gg/) project bootstrapped with `create-t3-app`.
+# SignaGen-ai
 
-## What's next? How do I make an app with this?
+## Overview
 
-We try to keep this project as simple as possible, so you can start with just the scaffolding we set up for you, and add additional things later when they become necessary.
+SignaGen-ai is a web application that allows users to generate signatures using AI.
 
-If you are not familiar with the different technologies used in this project, please refer to the respective docs. If you still are in the wind, please join our [Discord](https://t3.gg/discord) and ask for help.
+**insert video demo**
 
-- [Next.js](https://nextjs.org)
-- [NextAuth.js](https://next-auth.js.org)
-- [Prisma](https://prisma.io)
-- [Drizzle](https://orm.drizzle.team)
-- [Tailwind CSS](https://tailwindcss.com)
-- [tRPC](https://trpc.io)
+Try out an example here: https://sig-gen.vercel.app/
 
-## Learn More
+```Note: The example site is just displaying the same pre-generated signatures as an example, and not actually generating signatures. If you want to generate signatures, you can setup the app locally with the instructions below.```
 
-To learn more about the [T3 Stack](https://create.t3.gg/), take a look at the following resources:
+Built using:
+- Next.js / React
+- Tailwind CSS
+- [Flux.1-Schnell](https://huggingface.co/black-forest-labs/FLUX.1-schnell)
+- Flask
 
-- [Documentation](https://create.t3.gg/)
-- [Learn the T3 Stack](https://create.t3.gg/en/faq#what-learning-resources-are-currently-available) — Check out these awesome tutorials
+## Setup
 
-You can check out the [create-t3-app GitHub repository](https://github.com/t3-oss/create-t3-app) — your feedback and contributions are welcome!
+### Prerequisites
+- Python 3.10+
+- Node
+- CUDA
+- Since the server is running the Flux.1-Schnell model locally, it requires a Nvidia GPU for CUDA. It is also recommended to have at least 16GB of RAM.
+- The server will likely not run on Silicon Macs. You can edit the web application to use one of Flux.1-Schnell's API [endpoints](https://huggingface.co/black-forest-labs/FLUX.1-schnell#api-endpoints), but that will cost money.
 
-## How do I deploy this?
+### Installation
 
-Follow our deployment guides for [Vercel](https://create.t3.gg/en/deployment/vercel), [Netlify](https://create.t3.gg/en/deployment/netlify) and [Docker](https://create.t3.gg/en/deployment/docker) for more information.
+1. Clone the repository
+```bash
+git clone https://github.com/yourusername/sig-gen.git
+```
+
+2. Install Web App
+```bash
+cd sig-gen
+npm install
+```
+
+3. Install Flask Server
+```bash
+cd sig-server
+pip install -r requirements.txt
+```
+
+4. Run Web App
+```bash
+cd sig-gen
+npm run dev
+```
+
+5. Run Ai Server
+```bash
+cd sig-server
+./run.sh
+```
+or
+```
+flask --app run
+```
+
+6. Go to the web app and try it out
+```bash
+http://localhost:3000
+```
