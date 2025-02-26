@@ -12,7 +12,7 @@ export default function HomePage() {
       <div className="container flex flex-col items-center justify-center gap-6 px-4 py-16">
         <h1 className="text-5xl font-semibold font-dynapuff tracking-tight text-gray-800 sm:text-[5rem]">
           Signa<span className="text-[#8B4513]">Gen</span>-ai
-          <span className="blink">.</span>
+          <span className="blink text-[#8B4513]">.</span>
         </h1>
         <h2 className="text-2xl font-dynapuff tracking-tight text-gray-800 sm:text-[2rem]">
           Generate your new signature today!
