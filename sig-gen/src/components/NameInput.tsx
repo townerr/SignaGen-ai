@@ -1,6 +1,7 @@
 'use client';
 
 import React, { useState } from 'react';
+import {type Prediction } from 'replicate';
 
 interface NameInputProps {
   setImages: React.Dispatch<React.SetStateAction<string[]>>;
@@ -11,46 +12,22 @@ export default function NameInput({ setImages }: NameInputProps) {
   const [submitted, setSubmitted] = useState(false);
   const [loading, setLoading] = useState(false);
   const [progress, setProgress] = useState(0);
+  const [prediction, setPrediction] = useState<Prediction | null>(null);
 
   // Queue system to process signature generation requests
   const generateSignatures = async (name: string) => {
     setLoading(true);
     setImages([]); // Clear previous images
     setProgress(0);
-    
-    const totalRequests = 1;
-    const results: string[] = [];
-    
-    for (let i = 0; i < totalRequests; i++) {
-      try {
-        console.log('Generating signature for: ' + name);
-        const response = await fetch('http://127.0.0.1:5000/generate', {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json',
-            'Access-Control-Allow-Origin': '*',
-          },
-          body: JSON.stringify({ name }),
-        });
-        
-        if (!response.ok) {
-          throw new Error(`Failed to generate signature (${i+1}/${totalRequests})`);
-        }
-        
-        // Assuming the API returns the image data directly
-        const imageData = await response.text();
-        results.push(imageData);
-        
-        // Update progress
-        setProgress(Math.round(((i + 1) / totalRequests) * 100));
-        // Update images array as each one comes in
-        setImages(current => [...current, imageData]);
-      } catch (error) {
-        console.error(`Error generating signature ${i+1}:`, error);
-      }
-    }
-    
-    setLoading(false);
+
+    const response = await fetch('/api/predictions', {
+      method: 'POST',
+      body: JSON.stringify({ prompt: `You are a calligraphy artist. Choose a random style to create a handwritten signature for the full name: ${name}` }),
+    });
+
+    const prediction = await response.json() as Prediction;
+    setPrediction(prediction);
+    setImages([prediction.output]);
   };
 
   const handleSubmit = async (e: React.FormEvent) => {
