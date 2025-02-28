@@ -7,6 +7,14 @@ import "./src/env.js";
 /** @type {import("next").NextConfig} */
 const config = {
     crossOrigin: 'anonymous',
+    images: {
+        remotePatterns: [
+            {
+                hostname: 'replicate.delivery',
+                protocol: 'https',
+            },
+        ],
+    },
 };
 
 export default config;

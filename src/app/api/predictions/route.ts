@@ -20,7 +20,7 @@ export async function POST(req: NextRequest) {
 
   const prediction = await replicate.predictions.create({
     model: 'black-forest-labs/flux-schnell',
-    input: { prompt: data.prompt },
+    input: { prompt: data.prompt }
   });
 
   if (prediction?.error) {
