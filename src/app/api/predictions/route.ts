@@ -2,7 +2,7 @@ import { NextRequest, NextResponse } from "next/server";
 import Replicate from "replicate";
 
 const replicate = new Replicate({
-  auth: process.env.REPLICATE_API_TOKEN,
+  auth: process.env.NEXT_PUBLIC_REPLICATE_API_TOKEN,
 });
 
 interface RequestData {
@@ -12,7 +12,7 @@ interface RequestData {
 export async function POST(req: NextRequest) {
   const data = await req.json() as RequestData;
 
-  if (!process.env.REPLICATE_API_TOKEN) {
+  if (!process.env.NEXT_PUBLIC_REPLICATE_API_TOKEN) {
     throw new Error(
       "The REPLICATE_API_TOKEN environment variable is not set."
     );
