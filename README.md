@@ -6,7 +6,11 @@
 
 SignaGen-ai is a web application that allows users to generate signatures using AI.
 
-**insert video demo**
+
+
+https://github.com/user-attachments/assets/2e7a2fbc-8f23-49e8-93d2-5b51b7ed44df
+
+
 
 Try out an the demo here: **insert example site link**
 
@@ -15,6 +19,10 @@ Built using:
 - Tailwind CSS
 - [Flux.1-Schnell](https://huggingface.co/black-forest-labs/FLUX.1-schnell)
 - [Replicate](https://replicate.com/black-forest-labs/flux-schnell)
+
+## TODO:
+- Add auth and DB
+- Save users generated images in DB so they have a history of them
 
 ## Setup
 
