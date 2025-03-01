@@ -1,7 +1,6 @@
-'use client';
-
 import React, { useState } from 'react';
 import {type Prediction } from 'replicate';
+import { authClient } from '~/utils/auth-client'
 
 const sleep = (ms: number) => new Promise((r) => setTimeout(r, ms));
 
@@ -15,6 +14,8 @@ export default function NameInput({ setImages }: NameInputProps) {
   const [loading, setLoading] = useState(false);
   const [progress, setProgress] = useState(0);
   const [prediction, setPrediction] = useState<Prediction | null>(null);
+
+  const { data } = authClient.useSession();
 
   const generateSignatures = async (name: string) => {
     try {
@@ -31,6 +32,12 @@ export default function NameInput({ setImages }: NameInputProps) {
       if (finalPrediction?.status === "succeeded") {
         const image = finalPrediction.output as string;
         setImages((prev) => [...prev, image]);
+
+        // Save signature to database if user is logged in
+        if (data) {
+          const saveResult = await saveSignatureToDatabase(data.user.id, image.toString());
+        }
+
         return true;
       }
       return false;
@@ -43,7 +50,7 @@ export default function NameInput({ setImages }: NameInputProps) {
   const createPrediction = async (name: string): Promise<Prediction> => {
     const response = await fetch('/api/predictions', {
       method: 'POST',
-      body: JSON.stringify({ prompt: `You are a calligraphy artist. Choose a random style to create a handwritten signature for someones full name. Make sure there is a white background with only the signature with black font color. Create a signature for the name: ${name}` }),
+      body: JSON.stringify({ prompt: `You are a calligraphy artist. Create a random handwritten cursive signature for someones full name. Try to pick a new font style for each signature so that they are unique. The image should only contain a white background and the full name text with a black font color. Create a signature for the fullname: ${name}` }),
     });
 
     // Set initial prediction data and return it
@@ -66,7 +73,6 @@ export default function NameInput({ setImages }: NameInputProps) {
       }
       
       const data = await response.json() as Prediction;
-      console.log({ data });
       currentPrediction = data;
       setPrediction(data);
       
@@ -114,6 +120,36 @@ export default function NameInput({ setImages }: NameInputProps) {
       }
     }
   };
+  // Save signature to database
+  async function saveSignatureToDatabase(userId: string, image: string) {
+    try {
+      const response = await fetch('/api/signatures/save', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          userId,
+          image,
+        }),
+      });
+
+      const result = await response.json();
+      
+      if (!response.ok) {
+        console.error("Failed to save signature:", result.message);
+        return { success: false, error: result.message };
+      }
+      
+      return { success: true, message: result.message };
+    } catch (error) {
+      console.error("Error saving to database:", error);
+      return { 
+        success: false, 
+        error: error instanceof Error ? error.message : "Unknown error" 
+      };
+    }
+  }
 
   return (
     <div className="w-full max-w-md">

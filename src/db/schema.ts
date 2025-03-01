@@ -1,3 +1,4 @@
+import { sql } from "drizzle-orm";
 import { pgTable, text, integer, timestamp, boolean } from "drizzle-orm/pg-core";
 			
 export const user = pgTable("user", {
@@ -45,3 +46,11 @@ export const verification = pgTable("verification", {
  createdAt: timestamp('created_at'),
  updatedAt: timestamp('updated_at')
 				});
+
+export const signature = pgTable("signature", {
+  id: text("id").primaryKey().default(sql`gen_random_uuid()`),
+  userId: text('user_id').notNull().references(()=> user.id, { onDelete: 'cascade' }),
+  image: text('image').notNull(),
+  createdAt: timestamp('created_at').notNull(),
+  updatedAt: timestamp('updated_at').notNull()
+});
