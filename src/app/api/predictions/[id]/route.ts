@@ -7,7 +7,7 @@ const replicate = new Replicate({
 
 export async function GET(request: NextRequest,
   { params }: { params: { id: string } }) {
-  const id = await params.id;
+  params = await params;
 
   const prediction = await replicate.predictions.get(params.id);
 
