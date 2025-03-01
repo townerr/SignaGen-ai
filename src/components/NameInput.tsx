@@ -134,7 +134,7 @@ export default function NameInput({ setImages }: NameInputProps) {
         }),
       });
 
-      const result = await response.json();
+      const result: { success: boolean, message: string } = await response.json();
       
       if (!response.ok) {
         console.error("Failed to save signature:", result.message);

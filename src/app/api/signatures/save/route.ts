@@ -1,12 +1,11 @@
-import { NextRequest, NextResponse } from "next/server";
+import { NextResponse } from "next/server";
 import { db } from "~/db";
 import { signature } from "~/db/schema";
-import { authClient } from '~/utils/auth-client'
 
-export async function POST(request: NextRequest) {
+export async function POST(request: Request) {
   try { 
     // Parse the request body
-    const body = await request.json();
+    const body: { userId: string, image: string } = await request.json();
     const { userId, image } = body;
     
     if (!userId || !image) {

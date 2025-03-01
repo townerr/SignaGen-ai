@@ -1,7 +1,7 @@
 "use client"
 
-import { useState, useEffect } from "react"
-import { useRouter, useSearchParams } from "next/navigation"
+import { useState } from "react"
+import { useRouter } from "next/navigation"
 import Link from "next/link"
 import { authClient } from "~/utils/auth-client"
 
@@ -12,19 +12,10 @@ import { Button } from "~/components/ui/button"
 import { Label } from "~/components/ui/label"
 
 export default function LoginPage() {
-  const searchParams = useSearchParams()
   const router = useRouter()
   const [activeTab, setActiveTab] = useState("login")
   const [isLoading, setIsLoading] = useState(false)
   const [error, setError] = useState("")
-
-  useEffect(() => {
-    // Check if there's a tab parameter in the URL
-    const tabParam = searchParams.get("tab")
-    if (tabParam === "register") {
-      setActiveTab("register")
-    }
-  }, [searchParams])
 
   async function handleLogin(event: React.FormEvent<HTMLFormElement>) {
     event.preventDefault()

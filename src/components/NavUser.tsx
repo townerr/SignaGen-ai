@@ -29,10 +29,7 @@ const NavUser = () => {
                     {!data?.user ? (
                         <>
                             <Button asChild className="bg-white text-[#8B4513] rounded-xl hover:bg-white/80 hover:scale-105 transition-all font-dynapuff font-thin">
-                                <Link href="/login">Login</Link>
-                            </Button>
-                            <Button asChild className="bg-white text-[#8B4513] rounded-xl hover:bg-white/80 hover:scale-105 transition-all font-dynapuff font-thin">
-                                <Link href="/login?tab=register">Register</Link>
+                                <Link href="/login">Sign In</Link>
                             </Button>
                         </>
                     ) : (
@@ -43,7 +40,7 @@ const NavUser = () => {
                                         {data.user.name || 'User'}
                                     </span>
                                     <Avatar className="h-9 w-9 border-2 border-white">
-                                        <AvatarImage src={data.user.image as string} alt={data.user.name || 'User'} />
+                                        <AvatarImage src={data.user.image!} alt={data.user.name || 'User'} />
                                         <AvatarFallback className="bg-[#6B3003] text-white">
                                             {data.user?.name ? data.user.name.charAt(0).toUpperCase() : 'U'}
                                         </AvatarFallback>

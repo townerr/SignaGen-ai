@@ -1,4 +1,4 @@
-import { NextRequest, NextResponse } from "next/server";
+import { NextResponse } from "next/server";
 import Replicate from "replicate";
 
 const replicate = new Replicate({
@@ -9,7 +9,7 @@ interface RequestData {
   prompt: string;
 }
 
-export async function POST(req: NextRequest) {
+export async function POST(req: Request) {
   const data = await req.json() as RequestData;
 
   if (!process.env.NEXT_PUBLIC_REPLICATE_API_TOKEN) {
